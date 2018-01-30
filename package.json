@@ -4,7 +4,8 @@
   "description": "GrabDatCat API 1/29/18",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "mocha"
   },
   "author": "Adrian Rosales",
   "license": "ISC",
