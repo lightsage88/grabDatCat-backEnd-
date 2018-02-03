@@ -23,13 +23,15 @@ const UserSchema = mongoose.Schema({
 		required: true,
 		default: ''
 	},
-	gender: {
-		//this may be a problem...does the dropdown menu selecting F for Female
-		//make this type a String? find out in the next episode ,kiddies!!!!
+	emailAddress: {
 		type: String,
 		default: ''
 	},
-	personalityType: {
+	phoneNumber:{
+		type: String,
+		default: ''
+	},
+	mBTI: {
 		type: String,
 		default: ''
 	},

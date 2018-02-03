@@ -28,15 +28,11 @@ app.use(function(req, res, next){
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.use('api/users/', usersRouter);
-app.use('api/auth/', authRouter);
+app.use('/api/users/', usersRouter);
+app.use('/api/auth/', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
-//a regular old endpoint...it will return ok: true no matter the ep
-app.get('/api/*', (req, res) =>{
-	res.json({ok: true});
-});
 
 app.get('/api/protected', jwtAuth, (req, res)=>{
 	return res.json({
