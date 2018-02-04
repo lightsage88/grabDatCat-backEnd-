@@ -126,6 +126,7 @@ router.post('/', jsonParser, (req, res)=>{
 });
 
 router.get('/', function(req, res){
+	
 	return User.find()
 	.then(function(users){
 		let set = [];
