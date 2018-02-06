@@ -160,5 +160,39 @@ router.delete('/', jsonParser, (req, res)=> {
 
 });
 
+router.put('/', jsonParser, function(req,res){
+	console.log('editing details...hopefully');
+	console.log(req.body);
+let {_id, firstName, lastName, phoneNumber, emailAddress, mBTI} = req.body;
+console.log(firstName);
+// firstName = firstName.trim();
+// lastName = lastName.trim();
+
+User.updateOne({_id},
+			{$set: 
+				{
+					firstName: firstName, 
+					lastName: lastName,
+					phoneNumber: phoneNumber,
+					emailAddress: emailAddress,
+					mBTI: mBTI
+				}
+			})
+			.then(function(){
+				res.status(202);
+				return User.findOne({_id})
+				.then((response)=>{
+					console.log(response);
+					console.log('I like pigshit to eat');
+					res.status(202).json(response);
+				})
+			})
+			.catch((err)=>{
+				console.log(err);
+				console.error(err);
+			});
+
+});
+
 module.exports = {router};
 //may need an update thing...must to see later. derp 9:38am 1/30/2018
