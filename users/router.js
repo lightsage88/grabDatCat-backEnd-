@@ -141,15 +141,18 @@ router.get('/', function(req, res){
 });
 
 router.delete('/', jsonParser, (req, res)=> {
+	console.log('/api/users delete route running...');
 	let {id} = req.body;
+	console.log(id)
 	return User.findOne({'_id': id})
 	.then((user)=>{
 		let killSwitch = id;
 		console.log(user);
 		return User.deleteOne({'_id': killSwitch})
-			.then(()=>{
+			.then((response)=>{
+				console.log(response);
 				console.log(`account id ${killSwitch} has been batted away, hooman`);
-				return res.status(204).json({message: 'Account Shunned'});
+				res.status(204).json({message: 'Account Shunned'});
 			})
 		.catch((err)=>{
 			console.log(err);
@@ -193,6 +196,19 @@ User.updateOne({_id},
 			});
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {router};
 //may need an update thing...must to see later. derp 9:38am 1/30/2018

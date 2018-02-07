@@ -44,7 +44,6 @@ UserSchema.methods.apiRepr = function () {
 		username: this.username || '',
 		firstName: this.firstName || '',
 		lastName: this.lastName || '',
-		gender: this.gender || '',
 		personalityType: this.personalityType,
 		cats: this.cats
 	};
