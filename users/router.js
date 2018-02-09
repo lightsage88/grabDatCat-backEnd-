@@ -197,6 +197,22 @@ User.updateOne({_id},
 
 });
 
+router.put('/addCat', jsonParser, (req, res)=> {
+	console.log('adding a cat to the mlab, hopefully');
+	let {cat, mLabId} = req.body;
+	console.log(cat);
+	console.log(mLabId);
+	console.log('you need to use the mLabId to access the cats array in the mLabId\'s document so that we can add the cat to it.');
+	User.updateOne(
+		{'_id': mLabId},
+		{$addToSet: {cats: cat}}
+	)
+	.then((response)=>{
+		console.log(response);
+		res.status(202).json(response);
+	})
+});
+
 
 
 
