@@ -198,21 +198,56 @@ User.updateOne({_id},
 });
 
 router.put('/addCat', jsonParser, (req, res)=> {
-	console.log('adding a cat to the mlab, hopefully');
 	let {cat, mLabId} = req.body;
-	console.log(cat);
-	console.log(mLabId);
-	console.log('you need to use the mLabId to access the cats array in the mLabId\'s document so that we can add the cat to it.');
-	User.updateOne(
+	User.findOneAndUpdate({_id: mLabId},
+        // explain the '{new: true}' part?
+        {$push: {"cats": cat}},
+        {upsert: true}
+        )
+    .then(user => {
+    	console.log('...behold dem kittehs');
+        console.log(user)
+        res.status(200).json(user)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500)
+    }); 
+});
+
+
+router.post('/roundUpCats', jsonParser, (req, res)=>{
+	let {mLabId} = req.body;
+	return User.findOne(
 		{'_id': mLabId},
-		{$addToSet: {cats: cat}}
-	)
+
+		)
 	.then((response)=>{
 		console.log(response);
 		res.status(202).json(response);
 	})
+
 });
 
+
+
+
+
+
+router.put('/deleteCat', jsonParser, (req, res)=>{
+	let {mLabId, catId} = req.body;
+	console.log('deleting a cat from mlab');
+	User.findOneAndUpdate(
+		{'_id': mLabId},
+		{$pull: {cats: {id: catId} } },
+		{multi: true}
+	)
+	.then((response)=>{
+		console.log('yippiipi');
+		console.log(response);
+		res.status(202).json(response);
+	})
+})
 
 
 
