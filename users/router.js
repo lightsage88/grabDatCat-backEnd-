@@ -234,6 +234,8 @@ router.post('/roundUpCats', jsonParser, (req, res)=>{
 
 
 
+
+
 router.put('/deleteCat', jsonParser, (req, res)=>{
 	let {mLabId, catId} = req.body;
 	console.log('deleting a cat from mlab');
@@ -248,6 +250,20 @@ router.put('/deleteCat', jsonParser, (req, res)=>{
 		res.status(202).json(response);
 	})
 })
+
+router.post('/persist', jsonParser, (req,res)=>{
+	let {mLabId} = req.body;
+	console.log('persisting our state...hopefully');
+	User.findOne(
+		{'_id': mLabId}
+		)
+	.then((response)=>{
+		console.log(response);
+		res.status(202).json(response);
+	})
+
+});
+
 
 
 
