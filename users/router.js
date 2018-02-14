@@ -199,6 +199,8 @@ User.updateOne({_id},
 
 router.put('/addCat', jsonParser, (req, res)=> {
 	let {cat, mLabId} = req.body;
+	console.log(mLabId);
+	console.log(cat);
 	User.findOneAndUpdate({_id: mLabId},
         // explain the '{new: true}' part?
         {$push: {"cats": cat}},
@@ -206,8 +208,8 @@ router.put('/addCat', jsonParser, (req, res)=> {
         )
     .then(user => {
     	console.log('...behold dem kittehs');
-        console.log(user)
-        res.status(200).json(user)
+        console.log(user);
+        res.status(200).json(user);
     })
     .catch(err => {
         console.log(err)

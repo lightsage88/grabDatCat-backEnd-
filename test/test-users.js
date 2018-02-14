@@ -20,8 +20,20 @@ const lastName= 'lastName';
 const phoneNumber='55555555555'; 
 const emailAddress= 'go@code.com'; 
 const mBTI= 'INFP';
-const id = '5a754c3e151ded2af04a5870';
+// const _id = '5a754c3e151ded2af04a5870';
+const _id = '5a34a7938c232a0b1402a7c5';
 let superId;
+let cat =  {
+            "age": "Baby",
+            "breed": "American Shorthair",
+            "contactEmail": "dawnvargas05@yahoo.com",
+            "contactPhone": "213-840-0153",
+            "description": "If you are interested in meeting any one of our cat's or kittens please call: DAWN (213) 840-0153 OR feel free to email us at dawnvargas05@yahoo.com.  \nWe would love for you to come by and hang out in our new cattery until you find the best matched cat for you!  We have many cute kittens AND young cats here at Fur Baby that are ready for their forever homes.  Come find your purrfect meowing match today!",
+            "id": "35159904",
+            "media": "http://photos.petfinder.com/photos/pets/35157004/1/?bust=1463668448&width=500&-x.jpg",
+            "name": "Rascal",
+            "sex": "M"
+        };
 
 	
 
@@ -76,7 +88,7 @@ let superId;
 			return chai.request(app)
 			.post('/api/users')
 			.send({
-				username,
+				username: `TestDummy`+Math.random(),
 				password,
 				firstName,
 				lastName,
@@ -87,26 +99,29 @@ let superId;
 			.then((res)=>{
 				let responseThing = res;
 				superId = responseThing.id;
+				console.log(res.body);
 				expect(res).to.have.status(201);
 				expect(res.body).to.be.an('object');
-				expect(res.body).to.include.keys(
+				expect(res.body).to.have.deep.keys(
 					'username',
+					// 'password',
+					// '__v',
 					'firstName',
 					'lastName',
-					'phoneNumber',
-					'emailAddress',
-					'mBTI',
+					// 'phoneNumber',
+					// 'emailAddress',
+					// 'mBTI',
 					'id',
 					'cats'
 					);
 			})
-			.catch((err)=>{
-				console.error(err);
-				console.log(err);
-				if(err instanceof chai.AssertionError) {
-					throw err;
-				}
-			});
+			// .catch((err)=>{
+			// 	console.error(err);
+			// 	console.log(err);
+			// 	if(err instanceof chai.AssertionError) {
+			// 		throw err;
+			// 	}
+			// });
 		});
 	});
 
@@ -115,20 +130,20 @@ let superId;
 			a way to load the cats the user would have selected upon visiting the kennel page`, ()=>{
 				return chai.request(app)
 				.post('/api/users/roundUpCats')
-				.send({'_id':'5a34a7938c232a0b1402a7c5'})
+				.send({mLabId:_id})
 				.then((res)=>{
 					console.log(res.body);
 					expect(res).to.have.status(202);
-					// expect(res.body).to.be.an('object');
+					expect(res.body).to.be.an('object');
 					expect(res.body).to.include.keys(
-					'username',
 					'firstName',
 					'lastName',
 					'phoneNumber',
 					'emailAddress',
 					'mBTI',
-					'id',
-					'cats'
+					'_id',
+					'cats',
+					'__v'
 					);
 				})
 				.catch((err)=>{
@@ -145,20 +160,21 @@ let superId;
 		it(`should return, yet again, the data of a particular user...this was done to fix a redux issue`, ()=>{
 			return chai.request(app)
 				.post('/api/users/roundUpCats')
-				.send({'_id':'5a34a7938c232a0b1402a7c5'})
+				.send({mLabId:_id})
 				.then((res)=>{
 					console.log(res.body);
 					expect(res).to.have.status(202);
-					// expect(res.body).to.be.an('object');
+					expect(res.body).to.be.an('object');
 					expect(res.body).to.include.keys(
-					'username',
 					'firstName',
 					'lastName',
 					'phoneNumber',
 					'emailAddress',
 					'mBTI',
-					'id',
-					'cats'
+					'_id',
+					'cats',
+					'__v'
+
 					);
 				})
 				.catch((err)=>{
@@ -171,10 +187,112 @@ let superId;
 			});
 		});
 
-	
+	describe('PUT', ()=>{
+		it('should update a user',()=>{
+			return chai.request(app)
+			.put('/api/users')
+			.send({_id, firstName, lastName, phoneNumber, emailAddress, mBTI})
+			.then((res)=>{
+				console.log('put test going...');
+				console.log(res.body);
+				expect(res).to.have.status(202);
+				expect(res.body).to.be.an('object');
+				expect(res.body).to.have.deep.keys(
+					'__v',
+					'_id',
+					'cats',
+					'emailAddress',
+					'firstName',
+					'lastName',
+					'mBTI',
+					'phoneNumber',
+					);
+			})
+			.catch((err)=>{
+				console.error(err);
+				console.log(err);
+				if(err instanceof chai.AssertionError){
+					throw err;
+				}
+			});
+		});
+	});
 
+	describe('PUT-/addCat', ()=>{
+		it('should add a cat to the cat array in the data', ()=>{
+			return chai.request(app)
+			.put('/api/users/addCat')
+			.send({cat, mLabId:_id})
+			.then((res)=>{
+				console.log('put addCat test going...');
+				console.log(cat);
+				console.log(res.body);
+				expect(res).to.have.status(200);
+				expect(res.body).to.be.an('object');
+				expect(res.body).to.have.deep.keys(
+					'__v',
+					'_id',
+					'cats',
+					'emailAddress',
+					'firstName',
+					'lastName',
+					'mBTI',
+					'phoneNumber',
+					);
+				console.log('I am true crip');
+				console.log(res.body);
+				expect(res.body.cats).to.not.include(cat);
+		
+			})
+			.catch((err)=>{
+				console.error(err);
+				console.log(err);
+				if(err instanceof chai.AssertionError){
+					throw err;
+				}
+			});
 
+		});
+	});
 
+	describe('PUT-/deleteCat', ()=>{
+		it('should delete a cat from the cat array in the data', ()=>{
+			return chai.request(app)
+			.put('/api/users/deleteCat')
+			.send({catId:'35159904', mLabId:_id})
+			.then((response)=>{
+				console.log('put deleteCat test going...');
+				// console.log(cat);
+				console.log(response.body);
+				console.log(response.text);
+				console.log('mochocan');
+				expect(response).to.have.status(202);
+				// expect(res.body).to.be.an('object');
+								// expect(response.body).to.not.include.key('__flags');
+
+				expect(response.body).to.have.deep.keys(
+					'_id',
+					'cats',
+					'emailAddress',
+					'firstName',
+					'lastName',
+					'mBTI',
+					'phoneNumber',
+					'__v'
+					);
+				expect(response.body.cats).to.not.include(cat);
+		
+			})
+			.catch((err)=>{
+				console.error(err);
+				console.log(err);
+				if(err instanceof chai.AssertionError){
+					throw err;
+				}
+			});
+
+		});
+	});
 
 
 });
