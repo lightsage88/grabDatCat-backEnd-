@@ -13,24 +13,6 @@ const UserSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	firstName: {
-		type: String,
-		required: true,
-		default: ''
-	},
-	lastName: {
-		type: String,
-		required: true,
-		default: ''
-	},
-	emailAddress: {
-		type: String,
-		default: ''
-	},
-	phoneNumber:{
-		type: String,
-		default: ''
-	},
 	mBTI: {
 		type: String,
 		default: ''
@@ -42,8 +24,6 @@ UserSchema.methods.apiRepr = function () {
 	return {
 		id: this.id,
 		username: this.username || '',
-		firstName: this.firstName || '',
-		lastName: this.lastName || '',
 		personalityType: this.personalityType,
 		cats: this.cats
 	};

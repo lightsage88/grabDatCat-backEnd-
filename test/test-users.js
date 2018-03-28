@@ -15,10 +15,6 @@ describe('/api/users', function() {
 
 const username= 'username'; 
 const password='1234567890'; 
-const firstName='firstName'; 
-const lastName= 'lastName'; 
-const phoneNumber='55555555555'; 
-const emailAddress= 'go@code.com'; 
 const mBTI= 'INFP';
 // const _id = '5a754c3e151ded2af04a5870';
 const _id = '5a34a7938c232a0b1402a7c5';
@@ -90,10 +86,6 @@ let cat =  {
 			.send({
 				username: `TestDummy`+Math.random(),
 				password,
-				firstName,
-				lastName,
-				phoneNumber,
-				emailAddress,
 				mBTI
 			})
 			.then((res)=>{
@@ -106,8 +98,7 @@ let cat =  {
 					'username',
 					// 'password',
 					// '__v',
-					'firstName',
-					'lastName',
+					
 					// 'phoneNumber',
 					// 'emailAddress',
 					// 'mBTI',
@@ -136,10 +127,6 @@ let cat =  {
 					expect(res).to.have.status(202);
 					expect(res.body).to.be.an('object');
 					expect(res.body).to.include.keys(
-					'firstName',
-					'lastName',
-					'phoneNumber',
-					'emailAddress',
 					'mBTI',
 					'_id',
 					'cats',
@@ -166,10 +153,6 @@ let cat =  {
 					expect(res).to.have.status(202);
 					expect(res.body).to.be.an('object');
 					expect(res.body).to.include.keys(
-					'firstName',
-					'lastName',
-					'phoneNumber',
-					'emailAddress',
 					'mBTI',
 					'_id',
 					'cats',
@@ -201,11 +184,7 @@ let cat =  {
 					'__v',
 					'_id',
 					'cats',
-					'emailAddress',
-					'firstName',
-					'lastName',
-					'mBTI',
-					'phoneNumber',
+					'mBTI'
 					);
 			})
 			.catch((err)=>{
@@ -233,11 +212,7 @@ let cat =  {
 					'__v',
 					'_id',
 					'cats',
-					'emailAddress',
-					'firstName',
-					'lastName',
-					'mBTI',
-					'phoneNumber',
+					'mBTI'
 					);
 				console.log('I am true crip');
 				console.log(res.body);
@@ -273,11 +248,7 @@ let cat =  {
 				expect(response.body).to.have.deep.keys(
 					'_id',
 					'cats',
-					'emailAddress',
-					'firstName',
-					'lastName',
 					'mBTI',
-					'phoneNumber',
 					'__v'
 					);
 				expect(response.body.cats).to.not.include(cat);

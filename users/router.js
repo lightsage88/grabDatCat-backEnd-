@@ -25,7 +25,7 @@ router.post('/', jsonParser, (req, res)=>{
 		});
 	}
 
-	const stringFields = ['username', 'password', 'firstName', 'lastName', 'phoneNumber', 'emailAddress', 'mBTI'];
+	const stringFields = ['username', 'password', 'mBTI'];
 	//going back to possible having a gender datatype issue...string or not?
 	const nonStringField = stringFields.find(
 		field => field in req.body && typeof req.body[field] !== 'string'
@@ -80,7 +80,7 @@ router.post('/', jsonParser, (req, res)=>{
 		});
 	}
 
-	let {username, password, firstName, lastName, phoneNumber, emailAddress, mBTI} = req.body;
+	let {username, password, mBTI} = req.body;
 
 // 'username', 'password', 'firstName', 'lastName', 'phoneNumber', 'emailAddress', 'mBTI'
 
@@ -103,10 +103,6 @@ router.post('/', jsonParser, (req, res)=>{
 			return User.create({
 				username,
 				password: hash,
-				firstName,
-				lastName,
-				phoneNumber,
-				emailAddress,
 				mBTI
 			});
 		})
@@ -166,18 +162,13 @@ router.delete('/', jsonParser, (req, res)=> {
 router.put('/', jsonParser, function(req,res){
 	console.log('editing details...hopefully');
 	console.log(req.body);
-let {_id, firstName, lastName, phoneNumber, emailAddress, mBTI} = req.body;
-console.log(firstName);
+let {_id, mBTI} = req.body;
 // firstName = firstName.trim();
 // lastName = lastName.trim();
 
 User.updateOne({_id},
 			{$set: 
 				{
-					firstName: firstName, 
-					lastName: lastName,
-					phoneNumber: phoneNumber,
-					emailAddress: emailAddress,
 					mBTI: mBTI
 				}
 			})
@@ -230,12 +221,6 @@ router.post('/roundUpCats', jsonParser, (req, res)=>{
 	})
 
 });
-
-
-
-
-
-
 
 
 router.put('/deleteCat', jsonParser, (req, res)=>{
