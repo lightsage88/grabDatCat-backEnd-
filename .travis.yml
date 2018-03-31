@@ -3,7 +3,7 @@ node_js: node
 deploy:
   provider: heroku
   api_key:
-    secure: 37366026-faf1-4d93-be74-d05b4abbb55e
+    secure: bdaa29e8-618a-4f32-81e0-472f98ab5b1f
   app: radiant-dusk-44906
   on:
     repo: lightsage88/grabDatCat-backEnd-
