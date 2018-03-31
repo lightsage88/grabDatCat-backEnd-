@@ -176,8 +176,7 @@ User.updateOne({_id},
 				res.status(202);
 				return User.findOne({_id})
 				.then((response)=>{
-					console.log(response);
-					console.log('I like pigshit to eat');
+					
 					res.status(202).json(response);
 				})
 			})
@@ -232,7 +231,6 @@ router.put('/deleteCat', jsonParser, (req, res)=>{
 		{multi: true}
 	)
 	.then((response)=>{
-		console.log('yippiipi');
 		console.log(response);
 		res.status(202).json(response);
 	})
@@ -240,7 +238,6 @@ router.put('/deleteCat', jsonParser, (req, res)=>{
 
 router.post('/persist', jsonParser, (req,res)=>{
 	let {mLabId} = req.body;
-	console.log('persisting our state...hopefully');
 	User.findOne(
 		{'_id': mLabId}
 		)

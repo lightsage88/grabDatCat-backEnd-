@@ -51,7 +51,7 @@ function runServer() {
 			}
 			server = app
 			.listen(PORT, ()=>{
-				console.log(`Yo be illin like a true CRIP on port ${PORT}`);
+				console.log(`GrabDatCat API will be running on port: ${PORT}`);
 				resolve();
 			})
 			.on('error', err =>{
@@ -65,7 +65,7 @@ function runServer() {
 function closeServer(){
 	return mongoose.disconnect().then(()=> {
 		return new Promise((resolve, reject)=>{
-			console.log('Closing server, cuh');
+			console.log('Closing server for GDC');
 			server.close(err => {
 				if(err) {
 					return reject(err);
